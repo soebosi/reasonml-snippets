@@ -25,3 +25,12 @@ describe("Array.any", () => {
       |> toBe(false)
   });
 });
+
+describe("Array.bifurcate", () => {
+  open Expect;
+
+  test("should be true", () =>
+    expect(Array.bifurcate(["beep", "boop", "foo", "bar"], [true, true, false, true]))
+      |> toEqual((["beep", "boop", "bar"], ["foo"]))
+  );
+});
