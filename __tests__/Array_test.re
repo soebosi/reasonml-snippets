@@ -29,8 +29,17 @@ describe("Array.any", () => {
 describe("Array.bifurcate", () => {
   open Expect;
 
-  test("should be true", () =>
+  test("should extract \"foo\"", () =>
     expect(Array.bifurcate(["beep", "boop", "foo", "bar"], [true, true, false, true]))
+      |> toEqual((["beep", "boop", "bar"], ["foo"]))
+  );
+});
+
+describe("Array.bifurcateBy", () => {
+  open Expect;
+
+  test("should extract \"foo\"", () =>
+    expect(Array.bifurcateBy(["beep", "boop", "foo", "bar"], (str) => String.contains(str, 'b')))
       |> toEqual((["beep", "boop", "bar"], ["foo"]))
   );
 });

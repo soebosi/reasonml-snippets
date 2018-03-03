@@ -7,3 +7,5 @@ let bifurcate = (ary, filter: list(bool)) =>
   |> List.partition(((_, b)) => b)
   |> ((x, y)) => (List.map(((a, _)) => a, x), List.map(((a, _)) => a, y));
 
+let bifurcateBy = (ary, fn) => List.partition(fn, ary);
+
