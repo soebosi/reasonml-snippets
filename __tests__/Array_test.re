@@ -43,3 +43,22 @@ describe("Array.bifurcateBy", () => {
       |> toEqual((["beep", "boop", "bar"], ["foo"]))
   );
 });
+
+describe("Array.take", () => {
+  open Expect;
+
+  test("should extract \"bar\"", () =>
+    expect(Array.take(3, ["beep", "boop", "foo", "bar"]))
+      |> toEqual(["beep", "boop", "foo"])
+  );
+
+  test("should return full list when i > List.length()", () =>
+    expect(Array.take(5, ["beep", "boop", "foo", "bar"]))
+      |> toEqual(["beep", "boop", "foo", "bar"])
+  );
+
+  test("should return empty list when i <= 0", () =>
+    expect(Array.take(-1, ["beep", "boop", "foo", "bar"]))
+      |> toEqual([])
+  );
+});

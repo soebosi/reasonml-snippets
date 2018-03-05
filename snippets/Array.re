@@ -14,3 +14,13 @@ let bifurcate = (ary, filter: list(bool)) =>
 
 let bifurcateBy = (ary, fn) => List.partition(fn, ary);
 
+let take = {
+  let rec take_ = (i, ary, acc) => {
+    switch(i, ary) {
+    | (i, _) when i <= 0 => acc
+    | (_, []) => acc
+    | (_, [x, ...y]) => take_(i - 1, y, List.append(acc, [x]))
+    }
+  };
+  (i, ary) => take_(i, ary, [])
+};
