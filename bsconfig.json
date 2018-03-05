@@ -4,7 +4,7 @@
   "name": "reasonml-snippets",
   "version": "0.1.0",
   "sources": [{
-    "dir" : "snippets",
+    "dir" : "src",
     "subdirs" : true
   },{
     "dir" : "__tests__",
