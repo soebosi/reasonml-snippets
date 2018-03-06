@@ -62,3 +62,41 @@ describe("Array.take", () => {
       |> toEqual([])
   );
 });
+
+describe("Array.takeLast", () => {
+  open Expect;
+
+  test("should extract \"beep\"", () =>
+    expect(Array.takeLast(3, ["beep", "boop", "foo", "bar"]))
+      |> toEqual(["boop", "foo", "bar"])
+  );
+
+  test("should return full list when i > List.length()", () =>
+    expect(Array.takeLast(5, ["beep", "boop", "foo", "bar"]))
+      |> toEqual(["beep", "boop", "foo", "bar"])
+  );
+
+  test("should return empty list when i <= 0", () =>
+    expect(Array.takeLast(-1, ["beep", "boop", "foo", "bar"]))
+      |> toEqual([])
+  );
+});
+
+describe("Array.chunk", () => {
+  open Expect;
+
+  test("should return 2 elements list", () =>
+    expect(Array.chunk(2, ["beep", "boop", "foo", "bar"]))
+      |> toEqual([["beep", "boop"], ["foo", "bar"]])
+  );
+
+  test("should return rest elements", () =>
+    expect(Array.chunk(3, ["beep", "boop", "foo", "bar"]))
+      |> toEqual([["beep", "boop", "foo"], ["bar"]])
+  );
+
+  test("should return empty list when size <= 0", () =>
+    expect(Array.chunk(-1, ["beep", "boop", "foo", "bar"]))
+      |> toEqual([])
+  );
+});
