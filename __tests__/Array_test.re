@@ -4,11 +4,11 @@ describe("Array.all", () => {
   open Expect;
 
   test("should be true", () => {
-    expect(Array.all([1, 2, 3], (x) => x > 0))
+    expect(Array.all((x) => x > 0, [1, 2, 3]))
       |> toBe(true)
   });
   test("should be false", () =>
-    expect(Array.all([1, 2, 3], (x) => x > 2))
+    expect(Array.all((x) => x > 2, [1, 2, 3]))
       |> toBe(false)
   );
 });
@@ -17,11 +17,11 @@ describe("Array.any", () => {
   open Expect;
 
   test("should be true", () =>
-    expect(Array.any([1, 2, 3], (x) => x > 2))
+    expect(Array.any((x) => x > 2, [1, 2, 3]))
       |> toBe(true)
   );
   test("should be false", () => {
-    expect(Array.any([1, 2, 3], (x) => x < 0))
+    expect(Array.any((x) => x < 0, [1, 2, 3]))
       |> toBe(false)
   });
 });
@@ -30,7 +30,7 @@ describe("Array.bifurcate", () => {
   open Expect;
 
   test("should extract \"foo\"", () =>
-    expect(Array.bifurcate(["beep", "boop", "foo", "bar"], [true, true, false, true]))
+    expect(Array.bifurcate([true, true, false, true], ["beep", "boop", "foo", "bar"]))
       |> toEqual((["beep", "boop", "bar"], ["foo"]))
   );
 });
@@ -39,7 +39,7 @@ describe("Array.bifurcateBy", () => {
   open Expect;
 
   test("should extract \"foo\"", () =>
-    expect(Array.bifurcateBy(["beep", "boop", "foo", "bar"], (str) => String.contains(str, 'b')))
+    expect(Array.bifurcateBy((str) => String.contains(str, 'b'), ["beep", "boop", "foo", "bar"]))
       |> toEqual((["beep", "boop", "bar"], ["foo"]))
   );
 });
