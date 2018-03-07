@@ -85,3 +85,20 @@ describe("Array.chunk", () => {
     expect(Array.chunk(-1, ["beep", "boop", "foo", "bar"])) |> toEqual([])
   );
 });
+
+describe("Array.countOccurrences", () => {
+  test("should return 3", () =>
+    expect(Array.countOccurrences(1, [1, 1, 2, 1, 2, 3]))
+    |> toEqual(3)
+  );
+
+  test("should return 0 when there is no value", () =>
+    expect(Array.countOccurrences(-1, [1, 1, 2, 1, 2, 3]))
+    |> toEqual(0)
+  );
+
+  test("should return 0 when arr is empty", () =>
+    expect(Array.countOccurrences(1, []))
+    |> toEqual(0)
+  );
+});

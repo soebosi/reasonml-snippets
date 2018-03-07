@@ -34,3 +34,15 @@ let chunk = {
   };
   (i, ary) => chunk_(i, ary, []);
 };
+
+let countOccurrences = {
+  let rec countOccurrences_ = (value, arr, acc) =>
+    switch(arr) {
+    | [] => acc
+    | [a] when a == value => acc + 1
+    | [_] => acc
+    | [a, ...b] when a == value => countOccurrences_(value, b, acc + 1)
+    | [_, ...b] => countOccurrences_(value, b, acc)
+    };
+  (value, arr) => countOccurrences_(value, arr, 0);
+};
