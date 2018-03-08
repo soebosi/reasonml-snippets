@@ -102,3 +102,26 @@ describe("Array.countOccurrences", () => {
     |> toEqual(0)
   );
 });
+
+describe("Array.drop", () => {
+  test("should drop 1", () =>
+    expect(Array.drop(1, [1, 2, 3]))
+    |> toEqual([2, 3])
+  );
+  test("should drop 1, 2", () =>
+    expect(Array.drop(2, [1, 2, 3]))
+    |> toEqual([3])
+  );
+  test("should return empty list when i > ary.length", () =>
+    expect(Array.drop(42, [1, 2, 3]))
+    |> toEqual([])
+  );
+  test("should not drop when i == 0", () => {
+    expect(Array.drop(0, [1, 2, 3]))
+    |> toEqual([1, 2, 3])
+  });
+  test("should not drop when i < 0", () => {
+    expect(Array.drop(-10, [1, 2, 3]))
+    |> toEqual([1, 2, 3])
+  });
+});

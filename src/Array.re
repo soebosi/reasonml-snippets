@@ -46,3 +46,5 @@ let countOccurrences = {
     };
   (value, arr) => countOccurrences_(value, arr, 0);
 };
+
+let drop = (i, ary) => takeLast(List.length(ary) - i, ary);
