@@ -125,3 +125,26 @@ describe("Array.drop", () => {
     |> toEqual([1, 2, 3])
   });
 });
+
+describe("Array.dropRight", () => {
+  test("should drop 3", () =>
+    expect(Array.dropRight(1, [1, 2, 3]))
+    |> toEqual([1, 2])
+  );
+  test("should drop 2, 3", () =>
+    expect(Array.dropRight(2, [1, 2, 3]))
+    |> toEqual([1])
+  );
+  test("should return empty list when i > ary.length", () =>
+    expect(Array.dropRight(42, [1, 2, 3]))
+    |> toEqual([])
+  );
+  test("should not drop when i == 0", () => {
+    expect(Array.dropRight(0, [1, 2, 3]))
+    |> toEqual([1, 2, 3])
+  });
+  test("should not drop when i < 0", () => {
+    expect(Array.dropRight(-10, [1, 2, 3]))
+    |> toEqual([1, 2, 3])
+  });
+});

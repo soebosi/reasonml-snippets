@@ -48,3 +48,5 @@ let countOccurrences = {
 };
 
 let drop = (i, ary) => takeLast(List.length(ary) - i, ary);
+
+let dropRight = (i, ary) => take(List.length(ary) - i, ary);
