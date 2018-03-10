@@ -21,6 +21,15 @@ let take = {
 
 let takeLast = (i, ary) => List.(rev(ary) |> take(i) |> rev);
 
+let takeWhile = {
+  let rec takeWhile_ = (func, ary, acc) =>
+    switch(ary) {
+    | [head, ...tail] when func(head) => takeWhile_(func, tail, acc @ [head])
+    | _ => acc
+    };
+  (func, ary) => takeWhile_(func, ary, []);
+};
+
 
 let chunk = {
   let rec chunk_ = (i, ary, acc) => {
