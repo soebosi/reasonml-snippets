@@ -30,6 +30,7 @@ let takeWhile = {
   (func, ary) => takeWhile_(func, ary, []);
 };
 
+let takeLastWhile = (func, ary) => List.(rev(ary) |> takeWhile(func) |> rev);
 
 let chunk = {
   let rec chunk_ = (i, ary, acc) => {

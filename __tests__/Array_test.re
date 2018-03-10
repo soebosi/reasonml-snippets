@@ -79,6 +79,13 @@ describe("Array.takeWhile", () => {
   );
 });
 
+describe("Array.takeLastWhile", () => {
+  test("should extract [1, 2, 3]", () =>
+    expect(Array.takeLastWhile((i) => i < 3, [1, 2, 3, 1]))
+    |> toEqual([1])
+  );
+});
+
 describe("Array.chunk", () => {
   test("should return 2 elements list", () =>
     expect(Array.chunk(2, ["beep", "boop", "foo", "bar"]))
