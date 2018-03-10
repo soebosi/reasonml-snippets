@@ -19,7 +19,8 @@ let take = {
   (i, ary) => take_(i, ary, []);
 };
 
-let takeLast = (i, ary) => List.rev(ary) |> take(i) |> List.rev;
+let takeLast = (i, ary) => List.(rev(ary) |> take(i) |> rev);
+
 
 let chunk = {
   let rec chunk_ = (i, ary, acc) => {
