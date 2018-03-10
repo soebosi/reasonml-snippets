@@ -162,3 +162,10 @@ describe("Array.dropRight", () => {
     |> toEqual([1, 2, 3])
   });
 });
+
+describe("Array.dropRightWhile", () => {
+  test("should drop [3, 4]", () => {
+    expect(Array.dropRightWhile(n => n < 3, [1, 2, 3, 4]))
+    |> toEqual([1, 2,])
+  });
+});
