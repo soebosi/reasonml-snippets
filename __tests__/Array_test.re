@@ -169,3 +169,14 @@ describe("Array.dropRightWhile", () => {
     |> toEqual([1, 2,])
   });
 });
+
+describe("Array.everyNth", () => {
+  test("should skip 1, 3, 5", () => {
+    expect(Array.everyNth(2, [1, 2, 3, 4, 5, 6]))
+    |> toEqual([2, 4, 6])
+  });
+  test("should skip 1, 2, 4, 5", () => {
+    expect(Array.everyNth(3, [1, 2, 3, 4, 5, 6]))
+    |> toEqual([3, 6])
+  });
+});

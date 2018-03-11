@@ -63,3 +63,16 @@ let drop = (i, ary) => takeLast(List.length(ary) - i, ary);
 let dropRight = (i, ary) => take(List.length(ary) - i, ary);
 
 let dropRightWhile = takeWhile;
+
+let everyNth = {
+  let rec everyNth_ = (nth, ary, acc, index) => {
+    let skip = index mod nth != 0;
+    switch(ary) {
+    | [] => acc
+    | [hd, ...tl] =>
+        (skip ? acc : acc @ [hd])
+        |> everyNth_(nth, tl, _, index + 1)
+    };
+  };
+  (nth, ary) => everyNth_(nth, ary, [], 1);
+};
