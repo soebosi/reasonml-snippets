@@ -1,4 +1,5 @@
 # ReasonML-Snippets
 
-Snippets of https://30secondsofcode.org/ are written by ReasonML
+ReasonML-Snippets are snippets written by ReasonML.
+Inspired by https://30secondsofcode.org/.
 
