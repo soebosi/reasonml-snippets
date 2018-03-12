@@ -76,3 +76,5 @@ let everyNth = {
   };
   (nth, ary) => everyNth_(nth, ary, [], 1);
 };
+
+let findLast = (fn, ary) => List.rev(ary) |> List.find(fn)

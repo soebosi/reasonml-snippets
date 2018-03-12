@@ -180,3 +180,10 @@ describe("Array.everyNth", () => {
     |> toEqual([3, 6])
   });
 });
+
+describe("Array.findLast", () => {
+  test("should skip 1, 3, 5", () => {
+    expect(Array.findLast((n) => n mod 2 == 1, [1, 2, 3, 4]))
+    |> toEqual(3)
+  });
+});
