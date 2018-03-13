@@ -77,4 +77,10 @@ let everyNth = {
   (nth, ary) => everyNth_(nth, ary, [], 1);
 };
 
-let findLast = (fn, ary) => List.rev(ary) |> List.find(fn)
+let findLast = (fn, ary) => List.rev(ary) |> List.find(fn);
+
+let findLastIndex = (fn, ary) =>
+  List.mapi((i, elm) => (i, elm), ary)
+  |> List.rev
+  |> List.find(((_i, elm)) => fn(elm))
+  |> fst;

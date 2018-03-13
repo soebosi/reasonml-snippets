@@ -182,8 +182,15 @@ describe("Array.everyNth", () => {
 });
 
 describe("Array.findLast", () => {
-  test("should skip 1, 3, 5", () => {
+  test("should skip 4", () => {
     expect(Array.findLast((n) => n mod 2 == 1, [1, 2, 3, 4]))
     |> toEqual(3)
+  });
+});
+
+describe("Array.findLastIndex", () => {
+  test("should skip 4", () => {
+    expect(Array.findLastIndex((n) => n mod 2 == 1, [1, 2, 3, 4]))
+    |> toEqual(2)
   });
 });
