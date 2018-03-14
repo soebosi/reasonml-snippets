@@ -84,3 +84,5 @@ let findLastIndex = (fn, ary) =>
   |> List.rev
   |> List.find(((_i, elm)) => fn(elm))
   |> fst;
+
+let head = List.hd

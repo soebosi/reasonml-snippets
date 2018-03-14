@@ -194,3 +194,10 @@ describe("Array.findLastIndex", () => {
     |> toEqual(2)
   });
 });
+
+describe("Array.head", () => {
+  test("should get 1", () => {
+    expect(Array.head([1, 2, 3, 4]))
+    |> toEqual(1)
+  });
+});
