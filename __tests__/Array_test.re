@@ -201,3 +201,15 @@ describe("Array.head", () => {
     |> toEqual(1)
   });
 });
+
+describe("Array.indexOfAll", () => {
+  test("should get indices", () => {
+    expect(Array.indexOfAll(1, [1, 2, 3, 1, 2, 3]))
+    |> toEqual([0, 3])
+  });
+
+  test("should get empty list", () => {
+    expect(Array.indexOfAll(4, [1, 2, 3, 1, 2, 3]))
+    |> toEqual([])
+  });
+});

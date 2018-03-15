@@ -85,4 +85,11 @@ let findLastIndex = (fn, ary) =>
   |> List.find(((_i, elm)) => fn(elm))
   |> fst;
 
-let head = List.hd
+let head = List.hd;
+
+let filteri = (fn, ary) => List.mapi((i, a) => (i, a), ary) |> List.filter(fn);
+
+let indexOfAll = (elm, ary) =>
+  List.mapi((i, e) => (i, e), ary)
+  |> List.filter(((_, e)) => (e == elm))
+  |> List.map(fst);
