@@ -93,3 +93,5 @@ let indexOfAll = (elm, ary) =>
   List.mapi((i, e) => (i, e), ary)
   |> List.filter(((_, e)) => (e == elm))
   |> List.map(fst);
+
+let initial = (ary) => List.rev(ary) |> List.tl |> List.rev

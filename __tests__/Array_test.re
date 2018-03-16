@@ -213,3 +213,10 @@ describe("Array.indexOfAll", () => {
     |> toEqual([])
   });
 });
+
+describe("Array.initial", () => {
+  test("should drop last element", () => {
+    expect(Array.initial([1, 2, 3]))
+    |> toEqual([1, 2])
+  });
+});
