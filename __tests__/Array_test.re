@@ -220,3 +220,10 @@ describe("Array.initial", () => {
     |> toEqual([1, 2])
   });
 });
+
+describe("Array.initialize2DArray", () => {
+  test("should generate 2 x 2 List filled with 0", () => {
+    expect(Array.initialize2DArray(2, 2, 0))
+    |> toEqual([[0, 0], [0, 0]])
+  });
+});

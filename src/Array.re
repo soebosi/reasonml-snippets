@@ -94,4 +94,16 @@ let indexOfAll = (elm, ary) =>
   |> List.filter(((_, e)) => (e == elm))
   |> List.map(fst);
 
-let initial = (ary) => List.rev(ary) |> List.tl |> List.rev
+let initial = (ary) => List.rev(ary) |> List.tl |> List.rev;
+
+let range = (s, e) => {
+  let ret = ref([]);
+  for (i in s to e - 1) {
+    ret := List.append([i], ret^);
+  };
+  ret^;
+};
+
+let initialize2DArray = (w, h, val_) =>
+  range(0, w)
+  |> List.map((_) => List.map((_) => val_, range(0, h)));
