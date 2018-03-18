@@ -227,3 +227,10 @@ describe("Array.initialize2DArray", () => {
     |> toEqual([[0, 0], [0, 0]])
   });
 });
+
+describe("Array.initializeArrayWithRange", () => {
+  test("should generate natural number list", () => {
+    expect(Array.initializeArrayWithRange(0, 5, 1))
+    |> toEqual([0, 1, 2, 3, 4])
+  });
+});
