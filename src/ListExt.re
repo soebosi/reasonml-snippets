@@ -1,16 +1,16 @@
 module List = {
   include List;
 
-  let all = List.for_all;
+  let all = for_all;
 
-  let any = List.exists;
+  let any = exists;
 
   let bifurcate = (filter: list(bool), ary) =>
-    List.combine(ary, filter)
-    |> List.partition(snd)
-    |> (((x, y)) => (List.map(fst, x), List.map(fst, y)));
+    combine(ary, filter)
+    |> partition(snd)
+    |> (((x, y)) => (map(fst, x), map(fst, y)));
 
-  let bifurcateBy = List.partition;
+  let bifurcateBy = partition;
 
   let take = {
     let rec take_ = (i, ary, acc) =>
@@ -37,7 +37,7 @@ module List = {
 
   let chunk = {
     let rec chunk_ = (i, ary, acc) => {
-      let len = List.length(ary);
+      let len = length(ary);
       if (i <= 0) {
         [];
       } else if (len <= i) {
@@ -61,9 +61,9 @@ module List = {
     (value, arr) => countOccurrences_(value, arr, 0);
   };
 
-  let drop = (i, ary) => takeLast(List.length(ary) - i, ary);
+  let drop = (i, ary) => takeLast(length(ary) - i, ary);
 
-  let dropRight = (i, ary) => take(List.length(ary) - i, ary);
+  let dropRight = (i, ary) => take(length(ary) - i, ary);
 
   let dropRightWhile = takeWhile;
 
@@ -80,39 +80,39 @@ module List = {
     (nth, ary) => everyNth_(nth, ary, [], 1);
   };
 
-  let findLast = (fn, ary) => List.rev(ary) |> List.find(fn);
+  let findLast = (fn, ary) => rev(ary) |> find(fn);
 
   let findLastIndex = (fn, ary) =>
-    List.mapi((i, elm) => (i, elm), ary)
-    |> List.rev
-    |> List.find(((_i, elm)) => fn(elm))
+    mapi((i, elm) => (i, elm), ary)
+    |> rev
+    |> find(((_i, elm)) => fn(elm))
     |> fst;
 
-  let head = List.hd;
+  let head = hd;
 
-  let filteri = (fn, ary) => List.mapi((i, a) => (i, a), ary) |> List.filter(fn);
+  let filteri = (fn, ary) => mapi((i, a) => (i, a), ary) |> filter(fn);
 
   let indexOfAll = (elm, ary) =>
-    List.mapi((i, e) => (i, e), ary)
-    |> List.filter(((_, e)) => (e == elm))
-    |> List.map(fst);
+    mapi((i, e) => (i, e), ary)
+    |> filter(((_, e)) => (e == elm))
+    |> map(fst);
 
-  let initial = (ary) => List.rev(ary) |> List.tl |> List.rev;
+  let initial = (ary) => rev(ary) |> tl |> rev;
 
   let range = (s, e, step) => {
     let rec range_ = (s, e, step, acc) =>
       if (s >= e) {
         acc;
       } else {
-        range_(s + step, e, step, List.append(acc, [s]));
+        range_(s + step, e, step, append(acc, [s]));
       };
     range_(s, e, step, []);
   };
 
   let initialize2DArray = (w, h, val_) =>
     range(0, w, 1)
-    |> List.map((_) => range(val_, h + val_, 1))
-    |> List.map((elm) => List.map((_) => val_, elm));
+    |> map((_) => range(val_, h + val_, 1))
+    |> map((elm) => map((_) => val_, elm));
 
   let initializeArrayWithRange = range;
 };
