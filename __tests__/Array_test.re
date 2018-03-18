@@ -233,4 +233,9 @@ describe("Array.initializeArrayWithRange", () => {
     expect(Array.initializeArrayWithRange(0, 5, 1))
     |> toEqual([0, 1, 2, 3, 4])
   });
+
+  test("should generate even number list", () => {
+    expect(Array.initializeArrayWithRange(0, 9, 2))
+    |> toEqual([0, 2, 4, 6, 8])
+  });
 });

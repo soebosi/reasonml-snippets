@@ -97,15 +97,18 @@ let indexOfAll = (elm, ary) =>
 let initial = (ary) => List.rev(ary) |> List.tl |> List.rev;
 
 let range = (s, e, step) => {
-  let ret = ref([]);
-  for (i in s to e - 1) {
-    ret := List.append(ret^, [s + i * step]);
-  };
-  ret^;
+  let rec range_ = (s, e, step, acc) =>
+    if (s >= e) {
+      acc;
+    } else {
+      range_(s + step, e, step, List.append(acc, [s]));
+    };
+  range_(s, e, step, []);
 };
 
 let initialize2DArray = (w, h, val_) =>
-  range(0, w, 0)
-  |> List.map((_) => range(val_, h + val_, 0));
+  range(0, w, 1)
+  |> List.map((_) => range(val_, h + val_, 1))
+  |> List.map((elm) => List.map((_) => val_, elm));
 
 let initializeArrayWithRange = range;
