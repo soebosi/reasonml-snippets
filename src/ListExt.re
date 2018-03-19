@@ -1,12 +1,12 @@
 module List = {
-  include List;
-  let all = for_all;
-  let any = exists;
+  include Belt.List;
+  let all = (fn, ary) => every(ary, fn);
+  let any = (fn, ary) => some(ary, fn);
   let bifurcate = (filter: list(bool), ary) =>
-    combine(ary, filter)
-    |> partition(snd)
-    |> (((x, y)) => (map(fst, x), map(fst, y)));
-  let bifurcateBy = partition;
+    zip(ary, filter)
+    |> partition(_, snd)
+    |> (((x, y)) => (map(x, fst), map(y, fst)));
+  let bifurcateBy = (fn, ary) => partition(ary, fn);
   let take = {
     let rec take_ = (i, ary, acc) =>
       switch (i, ary) {
@@ -16,7 +16,7 @@ module List = {
       };
     (i, ary) => take_(i, ary, []);
   };
-  let takeLast = (i, ary) => rev(ary) |> take(i) |> rev;
+  let takeLast = (i, ary) => reverse(ary) |> take(i) |> reverse;
   let takeWhile = {
     let rec takeWhile_ = (func, ary, acc) =>
       switch (ary) {
@@ -26,7 +26,7 @@ module List = {
       };
     (func, ary) => takeWhile_(func, ary, []);
   };
-  let takeLastWhile = (func, ary) => rev(ary) |> takeWhile(func) |> rev;
+  let takeLastWhile = (func, ary) => reverse(ary) |> takeWhile(func) |> reverse;
   let chunk = {
     let rec chunk_ = (i, ary, acc) => {
       let len = length(ary);
@@ -65,31 +65,37 @@ module List = {
     };
     (nth, ary) => everyNth_(nth, ary, [], 1);
   };
-  let findLast = (fn, ary) => rev(ary) |> find(fn);
+  let getExn = (a) =>
+    switch(a) {
+    | Some(v) => v
+    | None => raise(Not_found)
+    };
+  let findLast = (fn, ary) => reverse(ary) |> getBy(_, fn) |> getExn;
   let findLastIndex = (fn, ary) =>
-    mapi((i, elm) => (i, elm), ary)
-    |> rev
-    |> find(((_i, elm)) => fn(elm))
+    mapWithIndex(ary, (i, elm) => (i, elm))
+    |> reverse
+    |> getBy(_, ((_i, elm)) => fn(elm))
+    |> getExn
     |> fst;
-  let head = hd;
-  let filteri = (fn, ary) => mapi((i, a) => (i, a), ary) |> filter(fn);
+  let head = headExn;
+  let filteri = (fn, ary) => mapWithIndex(ary, (i, a) => (i, a)) |> keep(_, fn);
   let indexOfAll = (elm, ary) =>
-    mapi((i, e) => (i, e), ary)
-    |> filter(((_, e)) => e == elm)
-    |> map(fst);
-  let initial = ary => rev(ary) |> tl |> rev;
+    mapWithIndex(ary, (i, e) => (i, e))
+    |> keep(_, ((_, e)) => e == elm)
+    |> map(_, fst);
+  let initial = ary => reverse(ary) |> tailExn |> reverse;
   let range = (s, e, step) => {
     let rec range_ = (s, e, step, acc) =>
       if (s >= e) {
         acc;
       } else {
-        range_(s + step, e, step, append(acc, [s]));
+        range_(s + step, e, step, concat(acc, [s]));
       };
     range_(s, e, step, []);
   };
   let initialize2DArray = (w, h, val_) =>
     range(0, w, 1)
-    |> map((_) => range(val_, h + val_, 1))
-    |> map(elm => map((_) => val_, elm));
+    |> map(_, (_) => range(val_, h + val_, 1))
+    |> map(_, elm => map(elm, (_) => val_));
   let initializeArrayWithRange = range;
 };
