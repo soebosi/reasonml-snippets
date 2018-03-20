@@ -2,10 +2,10 @@ module List = {
   include Belt.List;
   let all = (fn, ary) => every(ary, fn);
   let any = (fn, ary) => some(ary, fn);
-  let bifurcate = (filter: list(bool), ary) =>
-    zip(ary, filter)
-    |. partition(snd)
-    |> (((x, y)) => (map(x, fst), map(y, fst)));
+  let bifurcate = (filter: list(bool), ary) => {
+    let (x, y) = zip(ary, filter) |. partition(snd);
+    (map(x, fst), map(y, fst));
+  };
   let bifurcateBy = (fn, ary) => partition(ary, fn);
   let take = {
     let rec take_ = (i, ary, acc) =>
@@ -26,7 +26,8 @@ module List = {
       };
     (func, ary) => takeWhile_(func, ary, []);
   };
-  let takeLastWhile = (func, ary) => reverse(ary) |> takeWhile(func) |> reverse;
+  let takeLastWhile = (func, ary) =>
+    reverse(ary) |> takeWhile(func) |. reverse;
   let chunk = {
     let rec chunk_ = (i, ary, acc) => {
       let len = length(ary);
@@ -60,30 +61,31 @@ module List = {
       switch (ary) {
       | [] => acc
       | [hd, ...tl] =>
-        (skip ? acc : acc @ [hd]) |> everyNth_(nth, tl, _, index + 1)
+        (skip ? acc : acc @ [hd]) |. everyNth_(nth, tl, _, index + 1)
       };
     };
     (nth, ary) => everyNth_(nth, ary, [], 1);
   };
-  let getExn = (a) =>
-    switch(a) {
+  let getExn = a =>
+    switch (a) {
     | Some(v) => v
     | None => raise(Not_found)
     };
-  let findLast = (fn, ary) => reverse(ary) |. getBy(fn) |> getExn;
+  let findLast = (fn, ary) => reverse(ary) |. getBy(fn) |. getExn;
   let findLastIndex = (fn, ary) =>
     mapWithIndex(ary, (i, elm) => (i, elm))
-    |> reverse
+    |. reverse
     |. getBy(((_i, elm)) => fn(elm))
-    |> getExn
-    |> fst;
+    |. getExn
+    |. fst;
   let head = headExn;
-  let filteri = (fn, ary) => mapWithIndex(ary, (i, a) => (i, a)) |. keep(fn);
+  let filteri = (fn, ary) =>
+    mapWithIndex(ary, (i, a) => (i, a)) |. keep(fn);
   let indexOfAll = (elm, ary) =>
     mapWithIndex(ary, (i, e) => (i, e))
     |. keep(((_, e)) => e == elm)
     |. map(fst);
-  let initial = ary => reverse(ary) |> tailExn |> reverse;
+  let initial = ary => reverse(ary) |. tailExn |. reverse;
   let range = (s, e, step) => {
     let rec range_ = (s, e, step, acc) =>
       if (s >= e) {
