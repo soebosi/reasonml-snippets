@@ -4,7 +4,7 @@ module List = {
   let any = (fn, ary) => some(ary, fn);
   let bifurcate = (filter: list(bool), ary) =>
     zip(ary, filter)
-    |> partition(_, snd)
+    |. partition(snd)
     |> (((x, y)) => (map(x, fst), map(y, fst)));
   let bifurcateBy = (fn, ary) => partition(ary, fn);
   let take = {
@@ -70,19 +70,19 @@ module List = {
     | Some(v) => v
     | None => raise(Not_found)
     };
-  let findLast = (fn, ary) => reverse(ary) |> getBy(_, fn) |> getExn;
+  let findLast = (fn, ary) => reverse(ary) |. getBy(fn) |> getExn;
   let findLastIndex = (fn, ary) =>
     mapWithIndex(ary, (i, elm) => (i, elm))
     |> reverse
-    |> getBy(_, ((_i, elm)) => fn(elm))
+    |. getBy(((_i, elm)) => fn(elm))
     |> getExn
     |> fst;
   let head = headExn;
-  let filteri = (fn, ary) => mapWithIndex(ary, (i, a) => (i, a)) |> keep(_, fn);
+  let filteri = (fn, ary) => mapWithIndex(ary, (i, a) => (i, a)) |. keep(fn);
   let indexOfAll = (elm, ary) =>
     mapWithIndex(ary, (i, e) => (i, e))
-    |> keep(_, ((_, e)) => e == elm)
-    |> map(_, fst);
+    |. keep(((_, e)) => e == elm)
+    |. map(fst);
   let initial = ary => reverse(ary) |> tailExn |> reverse;
   let range = (s, e, step) => {
     let rec range_ = (s, e, step, acc) =>
@@ -95,7 +95,7 @@ module List = {
   };
   let initialize2DArray = (w, h, val_) =>
     range(0, w, 1)
-    |> map(_, (_) => range(val_, h + val_, 1))
-    |> map(_, elm => map(elm, (_) => val_));
+    |. map((_) => range(val_, h + val_, 1))
+    |. map(elm => map(elm, (_) => val_));
   let initializeArrayWithRange = range;
 };
