@@ -100,4 +100,5 @@ module List = {
     |. map((_) => range(val_, h + val_, 1))
     |. map(elm => map(elm, (_) => val_));
   let initializeArrayWithRange = range;
+  let initializeArrayWithRangeRight = (e, s, step) => range(s, e, step) |> reverse;
 };

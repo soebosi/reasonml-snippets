@@ -215,3 +215,14 @@ describe("List.initializeArrayWithRange", () => {
     |> toEqual([0, 2, 4, 6, 8])
   );
 });
+
+describe("List.initializeArrayWithRangeRight", () => {
+  test("should generate natural number list", () =>
+    expect(List.initializeArrayWithRangeRight(5, 0, 1))
+    |> toEqual([4, 3, 2, 1, 0])
+  );
+  test("should generate even number list", () =>
+    expect(List.initializeArrayWithRangeRight(9, 0, 2))
+    |> toEqual([8, 6, 4, 2, 0])
+  );
+});
