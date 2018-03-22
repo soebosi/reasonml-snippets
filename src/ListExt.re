@@ -9,7 +9,8 @@ module List = {
     (map(x, fst), map(y, fst));
   };
   let bifurcateBy = (fn, ary) => partition(ary, fn);
-  let takeLast = (i, ary) => reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse;
+  let takeLast = (i, ary) =>
+    reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse;
   let takeWhile = {
     let rec takeWhile_ = (ary, func, acc) =>
       switch (ary) {
@@ -29,7 +30,11 @@ module List = {
       } else if (len <= i) {
         acc @ [ary];
       } else {
-        chunk_(i, takeLast(len - i, ary), acc @ [take(ary, i) |. Option.getWithDefault([])]);
+        chunk_(
+          i,
+          takeLast(len - i, ary),
+          acc @ [take(ary, i) |. Option.getWithDefault([])],
+        );
       };
     };
     (i, ary) => chunk_(i, ary, []);
@@ -46,7 +51,8 @@ module List = {
     (value, arr) => countOccurrences_(value, arr, 0);
   };
   let drop = (i, ary) => takeLast(length(ary) - i, ary);
-  let dropRight = (i, ary) => take(ary, length(ary) - i) |. Option.getWithDefault([]);
+  let dropRight = (i, ary) =>
+    take(ary, length(ary) - i) |. Option.getWithDefault([]);
   let dropRightWhile = takeWhile;
   let everyNth = {
     let rec everyNth_ = (nth, ary, acc, index) => {
@@ -93,5 +99,6 @@ module List = {
     |. map((_) => range(val_, h + val_, 1))
     |. map(elm => map(elm, (_) => val_));
   let initializeArrayWithRange = range;
-  let initializeArrayWithRangeRight = (e, s, step) => range(s, e, step) |. reverse;
+  let initializeArrayWithRangeRight = (e, s, step) =>
+    range(s, e, step) |. reverse;
 };
