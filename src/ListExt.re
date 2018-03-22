@@ -1,3 +1,5 @@
+open Belt;
+
 module List = {
   include Belt.List;
   let all = (fn, ary) => every(ary, fn);
@@ -7,27 +9,18 @@ module List = {
     (map(x, fst), map(y, fst));
   };
   let bifurcateBy = (fn, ary) => partition(ary, fn);
-  let take = {
-    let rec take_ = (i, ary, acc) =>
-      switch (i, ary) {
-      | (i, _) when i <= 0 => acc
-      | (_, []) => acc
-      | (_, [x, ...y]) => take_(i - 1, y, acc @ [x])
-      };
-    (i, ary) => take_(i, ary, []);
-  };
-  let takeLast = (i, ary) => reverse(ary) |> take(i) |> reverse;
+  let takeLast = (i, ary) => reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse;
   let takeWhile = {
-    let rec takeWhile_ = (func, ary, acc) =>
+    let rec takeWhile_ = (ary, func, acc) =>
       switch (ary) {
       | [head, ...tail] when func(head) =>
-        takeWhile_(func, tail, acc @ [head])
+        takeWhile_(tail, func, acc @ [head])
       | _ => acc
       };
-    (func, ary) => takeWhile_(func, ary, []);
+    (ary, func) => takeWhile_(ary, func, []);
   };
   let takeLastWhile = (func, ary) =>
-    reverse(ary) |> takeWhile(func) |. reverse;
+    reverse(ary) |. takeWhile(func) |. reverse;
   let chunk = {
     let rec chunk_ = (i, ary, acc) => {
       let len = length(ary);
@@ -36,7 +29,7 @@ module List = {
       } else if (len <= i) {
         acc @ [ary];
       } else {
-        chunk_(i, takeLast(len - i, ary), acc @ [take(i, ary)]);
+        chunk_(i, takeLast(len - i, ary), acc @ [take(ary, i) |. Option.getWithDefault([])]);
       };
     };
     (i, ary) => chunk_(i, ary, []);
@@ -53,7 +46,7 @@ module List = {
     (value, arr) => countOccurrences_(value, arr, 0);
   };
   let drop = (i, ary) => takeLast(length(ary) - i, ary);
-  let dropRight = (i, ary) => take(length(ary) - i, ary);
+  let dropRight = (i, ary) => take(ary, length(ary) - i) |. Option.getWithDefault([]);
   let dropRightWhile = takeWhile;
   let everyNth = {
     let rec everyNth_ = (nth, ary, acc, index) => {
@@ -100,5 +93,5 @@ module List = {
     |. map((_) => range(val_, h + val_, 1))
     |. map(elm => map(elm, (_) => val_));
   let initializeArrayWithRange = range;
-  let initializeArrayWithRangeRight = (e, s, step) => range(s, e, step) |> reverse;
+  let initializeArrayWithRangeRight = (e, s, step) => range(s, e, step) |. reverse;
 };

@@ -46,28 +46,14 @@ describe("List.bifurcateBy", () =>
   )
 );
 
-describe("List.take", () => {
-  test("should extract \"bar\"", () =>
-    expect(List.take(3, ["beep", "boop", "foo", "bar"]))
-    |> toEqual(["beep", "boop", "foo"])
-  );
-  test("should return full list when i > List.length()", () =>
-    expect(List.take(5, ["beep", "boop", "foo", "bar"]))
-    |> toEqual(["beep", "boop", "foo", "bar"])
-  );
-  test("should return empty list when i <= 0", () =>
-    expect(List.take(-1, ["beep", "boop", "foo", "bar"])) |> toEqual([])
-  );
-});
-
 describe("List.takeLast", () => {
   test("should extract \"beep\"", () =>
     expect(List.takeLast(3, ["beep", "boop", "foo", "bar"]))
     |> toEqual(["boop", "foo", "bar"])
   );
-  test("should return full list when i > List.length()", () =>
+  test("should return empty list when i > List.length()", () =>
     expect(List.takeLast(5, ["beep", "boop", "foo", "bar"]))
-    |> toEqual(["beep", "boop", "foo", "bar"])
+    |> toEqual([])
   );
   test("should return empty list when i <= 0", () =>
     expect(List.takeLast(-1, ["beep", "boop", "foo", "bar"]))
@@ -77,7 +63,7 @@ describe("List.takeLast", () => {
 
 describe("List.takeWhile", () =>
   test("should extract [3, 1]", () =>
-    expect(List.takeWhile(i => i < 3, [1, 2, 3, 1])) |> toEqual([1, 2])
+    expect(List.takeWhile([1, 2, 3, 1], i => i < 3)) |> toEqual([1, 2])
   )
 );
 
@@ -126,8 +112,8 @@ describe("List.drop", () => {
   test("should not drop when i == 0", () =>
     expect(List.drop(0, [1, 2, 3])) |> toEqual([1, 2, 3])
   );
-  test("should not drop when i < 0", () =>
-    expect(List.drop(-10, [1, 2, 3])) |> toEqual([1, 2, 3])
+  test("should return empty list when i < 0", () =>
+    expect(List.drop(-10, [1, 2, 3])) |> toEqual([])
   );
 });
 
@@ -144,14 +130,14 @@ describe("List.dropRight", () => {
   test("should not drop when i == 0", () =>
     expect(List.dropRight(0, [1, 2, 3])) |> toEqual([1, 2, 3])
   );
-  test("should not drop when i < 0", () =>
-    expect(List.dropRight(-10, [1, 2, 3])) |> toEqual([1, 2, 3])
+  test("should return empty when i < 0", () =>
+    expect(List.dropRight(-10, [1, 2, 3])) |> toEqual([])
   );
 });
 
 describe("List.dropRightWhile", () =>
   test("should drop [3, 4]", () =>
-    expect(List.dropRightWhile(n => n < 3, [1, 2, 3, 4]))
+    expect(List.dropRightWhile([1, 2, 3, 4], n => n < 3))
     |> toEqual([1, 2])
   )
 );
