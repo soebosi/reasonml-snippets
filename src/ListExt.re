@@ -95,9 +95,7 @@ module List = {
     range_(s, e, step, []);
   };
   let initialize2DArray = (w, h, val_) =>
-    range(0, w, 1)
-    |. map((_) => range(val_, h + val_, 1))
-    |. map(elm => map(elm, (_) => val_));
+    range(0, w, 1) |. map((_) => make(h, val_));
   let initializeArrayWithRange = range;
   let initializeArrayWithRangeRight = (e, s, step) =>
     range(s, e, step) |. reverse;
