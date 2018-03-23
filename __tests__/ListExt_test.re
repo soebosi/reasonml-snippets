@@ -212,3 +212,10 @@ describe("List.initializeArrayWithRangeRight", () => {
     |> toEqual([8, 6, 4, 2, 0])
   );
 });
+
+describe("List.initializeArrayWithValues", () => {
+  test("should generate natural number list", () =>
+    expect(List.initializeArrayWithValues(5, 2))
+    |> toEqual([2, 2, 2, 2, 2])
+  );
+});

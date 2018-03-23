@@ -101,4 +101,5 @@ module List = {
   let initializeArrayWithRange = range;
   let initializeArrayWithRangeRight = (e, s, step) =>
     range(s, e, step) |. reverse;
+  let initializeArrayWithValues = make;
 };
