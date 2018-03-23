@@ -85,19 +85,11 @@ module List = {
     |. keep(((_, e)) => e == elm)
     |. map(fst);
   let initial = ary => reverse(ary) |. tailExn |. reverse;
-  let range = (s, e, step) => {
-    let rec range_ = (s, e, step, acc) =>
-      if (s >= e) {
-        acc;
-      } else {
-        range_(s + step, e, step, concat(acc, [s]));
-      };
-    range_(s, e, step, []);
-  };
+  let range_ = (s, e, step) => Array.rangeBy(s, e - 1, ~step) |> fromArray;
   let initialize2DArray = (w, h, val_) =>
-    range(0, w, 1) |. map((_) => make(h, val_));
-  let initializeArrayWithRange = range;
+    range_(0, w, 1) |. map((_) => make(h, val_));
+  let initializeArrayWithRange = range_;
   let initializeArrayWithRangeRight = (e, s, step) =>
-    range(s, e, step) |. reverse;
+    range_(s, e, step) |. reverse;
   let initializeArrayWithValues = make;
 };
