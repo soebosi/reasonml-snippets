@@ -52,8 +52,7 @@ describe("List.takeLast", () => {
     |> toEqual(["boop", "foo", "bar"])
   );
   test("should return empty list when i > List.length()", () =>
-    expect(List.takeLast(5, ["beep", "boop", "foo", "bar"]))
-    |> toEqual([])
+    expect(List.takeLast(5, ["beep", "boop", "foo", "bar"])) |> toEqual([])
   );
   test("should return empty list when i <= 0", () =>
     expect(List.takeLast(-1, ["beep", "boop", "foo", "bar"]))
@@ -137,8 +136,7 @@ describe("List.dropRight", () => {
 
 describe("List.dropRightWhile", () =>
   test("should drop [3, 4]", () =>
-    expect(List.dropRightWhile([1, 2, 3, 4], n => n < 3))
-    |> toEqual([1, 2])
+    expect(List.dropRightWhile([1, 2, 3, 4], n => n < 3)) |> toEqual([1, 2])
   )
 );
 
@@ -213,9 +211,8 @@ describe("List.initializeArrayWithRangeRight", () => {
   );
 });
 
-describe("List.initializeArrayWithValues", () => {
+describe("List.initializeArrayWithValues", () =>
   test("should generate natural number list", () =>
-    expect(List.initializeArrayWithValues(5, 2))
-    |> toEqual([2, 2, 2, 2, 2])
-  );
-});
+    expect(List.initializeArrayWithValues(5, 2)) |> toEqual([2, 2, 2, 2, 2])
+  )
+);
