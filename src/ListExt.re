@@ -92,4 +92,8 @@ module List = {
   let initializeArrayWithRangeRight = (e, s, step) =>
     range_(s, e, step) |. reverse;
   let initializeArrayWithValues = make;
+  let join = (ary, sep) => {
+    let [hd, ...tl] = ary;
+    List.reduce(tl, hd, (a, b) => a ++ sep ++ b);
+  };
 };

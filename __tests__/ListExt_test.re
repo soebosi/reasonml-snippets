@@ -216,3 +216,10 @@ describe("List.initializeArrayWithValues", () =>
     expect(List.initializeArrayWithValues(5, 2)) |> toEqual([2, 2, 2, 2, 2])
   )
 );
+
+describe("List.initializeArrayWithValues", () =>
+  test("should generate natural number list", () =>
+    expect(List.join(["pen", "pineapple", "apple", "pen"], ","))
+    |> toEqual("pen,pineapple,apple,pen")
+  )
+);
