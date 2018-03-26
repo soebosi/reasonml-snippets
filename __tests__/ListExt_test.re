@@ -223,3 +223,10 @@ describe("List.initializeArrayWithValues", () =>
     |> toEqual("pen,pineapple,apple,pen")
   )
 );
+
+describe("List.last", () =>
+  test("should get last element", () =>
+    expect(List.last([1, 2, 3]))
+    |> toEqual(3)
+  )
+);

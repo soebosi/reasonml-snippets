@@ -96,4 +96,5 @@ module List = {
     let [hd, ...tl] = ary;
     List.reduce(tl, hd, (a, b) => a ++ sep ++ b);
   };
+  let last = (ary) => reverse(ary) |> headExn;
 };
