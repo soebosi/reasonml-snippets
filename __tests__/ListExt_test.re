@@ -238,3 +238,14 @@ describe("List.forEachRight", () =>
     expect(ret^) |> toEqual([1, 2, 3, 4])
   })
 );
+
+describe("List.none", () => {
+  test("should true", () =>
+    expect(List.none([0, 1, 3, 0], (a) => a == 2))
+    |> toEqual(true)
+  );
+  test("should false", () =>
+    expect(List.none([0, 1, 2, 0], (a) => a == 2))
+    |> toEqual(false)
+  );
+});

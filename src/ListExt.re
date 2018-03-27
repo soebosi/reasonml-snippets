@@ -98,4 +98,5 @@ module List = {
   };
   let last = (ary) => reverse(ary) |. headExn;
   let forEachRight = (ary, fn) => reverse(ary) |. forEach(fn);
+  let none = (ary, fn) => !some(ary, fn);
 };
