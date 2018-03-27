@@ -230,3 +230,11 @@ describe("List.last", () =>
     |> toEqual(3)
   )
 );
+
+describe("List.forEachRight", () =>
+  test("should get last element", () => {
+    let ret = ref([]);
+    List.forEachRight([1, 2, 3, 4], (val_) => ret := [val_, ...ret^]);
+    expect(ret^) |> toEqual([1, 2, 3, 4])
+  })
+);
