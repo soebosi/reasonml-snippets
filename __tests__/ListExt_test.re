@@ -6,19 +6,19 @@ open ListExt;
 
 describe("List.all", () => {
   test("should be true", () =>
-    expect(List.all(x => x > 0, [1, 2, 3])) |> toBe(true)
+    expect(List.all([1, 2, 3], x => x > 0)) |> toBe(true)
   );
   test("should be false", () =>
-    expect(List.all(x => x > 2, [1, 2, 3])) |> toBe(false)
+    expect(List.all([1, 2, 3], x => x > 2)) |> toBe(false)
   );
 });
 
 describe("List.any", () => {
   test("should be true", () =>
-    expect(List.any(x => x > 2, [1, 2, 3])) |> toBe(true)
+    expect(List.any([1, 2, 3], x => x > 2)) |> toBe(true)
   );
   test("should be false", () =>
-    expect(List.any(x => x < 0, [1, 2, 3])) |> toBe(false)
+    expect(List.any([1, 2, 3], x => x < 0)) |> toBe(false)
   );
 });
 
@@ -26,8 +26,8 @@ describe("List.bifurcate", () =>
   test("should extract \"foo\"", () =>
     expect(
       List.bifurcate(
-        [true, true, false, true],
         ["beep", "boop", "foo", "bar"],
+        [true, true, false, true],
       ),
     )
     |> toEqual((["beep", "boop", "bar"], ["foo"]))
@@ -38,8 +38,8 @@ describe("List.bifurcateBy", () =>
   test("should extract \"foo\"", () =>
     expect(
       List.bifurcateBy(
-        str => String.contains(str, 'b'),
         ["beep", "boop", "foo", "bar"],
+        str => String.contains(str, 'b'),
       ),
     )
     |> toEqual((["beep", "boop", "bar"], ["foo"]))
@@ -48,14 +48,14 @@ describe("List.bifurcateBy", () =>
 
 describe("List.takeLast", () => {
   test("should extract \"beep\"", () =>
-    expect(List.takeLast(3, ["beep", "boop", "foo", "bar"]))
+    expect(List.takeLast(["beep", "boop", "foo", "bar"], 3))
     |> toEqual(["boop", "foo", "bar"])
   );
   test("should return empty list when i > List.length()", () =>
-    expect(List.takeLast(5, ["beep", "boop", "foo", "bar"])) |> toEqual([])
+    expect(List.takeLast(["beep", "boop", "foo", "bar"], 5)) |> toEqual([])
   );
   test("should return empty list when i <= 0", () =>
-    expect(List.takeLast(-1, ["beep", "boop", "foo", "bar"]))
+    expect(List.takeLast(["beep", "boop", "foo", "bar"], -1))
     |> toEqual([])
   );
 });
@@ -68,69 +68,69 @@ describe("List.takeWhile", () =>
 
 describe("List.takeLastWhile", () =>
   test("should extract [1, 2, 3]", () =>
-    expect(List.takeLastWhile(i => i < 3, [1, 2, 3, 1])) |> toEqual([1])
+    expect(List.takeLastWhile([1, 2, 3, 1], i => i < 3)) |> toEqual([1])
   )
 );
 
 describe("List.chunk", () => {
   test("should return 2 elements list", () =>
-    expect(List.chunk(2, ["beep", "boop", "foo", "bar"]))
+    expect(List.chunk(["beep", "boop", "foo", "bar"], 2))
     |> toEqual([["beep", "boop"], ["foo", "bar"]])
   );
   test("should return rest elements", () =>
-    expect(List.chunk(3, ["beep", "boop", "foo", "bar"]))
+    expect(List.chunk(["beep", "boop", "foo", "bar"], 3))
     |> toEqual([["beep", "boop", "foo"], ["bar"]])
   );
   test("should return empty list when size <= 0", () =>
-    expect(List.chunk(-1, ["beep", "boop", "foo", "bar"])) |> toEqual([])
+    expect(List.chunk(["beep", "boop", "foo", "bar"], -1)) |> toEqual([])
   );
 });
 
 describe("List.countOccurrences", () => {
   test("should return 3", () =>
-    expect(List.countOccurrences(1, [1, 1, 2, 1, 2, 3])) |> toEqual(3)
+    expect(List.countOccurrences([1, 1, 2, 1, 2, 3], 1)) |> toEqual(3)
   );
   test("should return 0 when there is no value", () =>
-    expect(List.countOccurrences(-1, [1, 1, 2, 1, 2, 3])) |> toEqual(0)
+    expect(List.countOccurrences([1, 1, 2, 1, 2, 3], -1)) |> toEqual(0)
   );
   test("should return 0 when arr is empty", () =>
-    expect(List.countOccurrences(1, [])) |> toEqual(0)
+    expect(List.countOccurrences([], 1)) |> toEqual(0)
   );
 });
 
 describe("List.drop", () => {
   test("should drop 1", () =>
-    expect(List.drop(1, [1, 2, 3])) |> toEqual([2, 3])
+    expect(List.drop([1, 2, 3], 1)) |> toEqual([2, 3])
   );
   test("should drop 1, 2", () =>
-    expect(List.drop(2, [1, 2, 3])) |> toEqual([3])
+    expect(List.drop([1, 2, 3], 2)) |> toEqual([3])
   );
   test("should return empty list when i > ary.length", () =>
-    expect(List.drop(42, [1, 2, 3])) |> toEqual([])
+    expect(List.drop([1, 2, 3], 42)) |> toEqual([])
   );
   test("should not drop when i == 0", () =>
-    expect(List.drop(0, [1, 2, 3])) |> toEqual([1, 2, 3])
+    expect(List.drop([1, 2, 3], 0)) |> toEqual([1, 2, 3])
   );
   test("should return empty list when i < 0", () =>
-    expect(List.drop(-10, [1, 2, 3])) |> toEqual([])
+    expect(List.drop([1, 2, 3], -10)) |> toEqual([])
   );
 });
 
 describe("List.dropRight", () => {
   test("should drop 3", () =>
-    expect(List.dropRight(1, [1, 2, 3])) |> toEqual([1, 2])
+    expect(List.dropRight([1, 2, 3], 1)) |> toEqual([1, 2])
   );
   test("should drop 2, 3", () =>
-    expect(List.dropRight(2, [1, 2, 3])) |> toEqual([1])
+    expect(List.dropRight([1, 2, 3], 2)) |> toEqual([1])
   );
   test("should return empty list when i > ary.length", () =>
-    expect(List.dropRight(42, [1, 2, 3])) |> toEqual([])
+    expect(List.dropRight([1, 2, 3], 42)) |> toEqual([])
   );
   test("should not drop when i == 0", () =>
-    expect(List.dropRight(0, [1, 2, 3])) |> toEqual([1, 2, 3])
+    expect(List.dropRight([1, 2, 3], 0)) |> toEqual([1, 2, 3])
   );
   test("should return empty when i < 0", () =>
-    expect(List.dropRight(-10, [1, 2, 3])) |> toEqual([])
+    expect(List.dropRight([1, 2, 3], -10)) |> toEqual([])
   );
 });
 
@@ -142,22 +142,22 @@ describe("List.dropRightWhile", () =>
 
 describe("List.everyNth", () => {
   test("should skip 1, 3, 5", () =>
-    expect(List.everyNth(2, [1, 2, 3, 4, 5, 6])) |> toEqual([2, 4, 6])
+    expect(List.everyNth([1, 2, 3, 4, 5, 6], 2)) |> toEqual([2, 4, 6])
   );
   test("should skip 1, 2, 4, 5", () =>
-    expect(List.everyNth(3, [1, 2, 3, 4, 5, 6])) |> toEqual([3, 6])
+    expect(List.everyNth([1, 2, 3, 4, 5, 6], 3)) |> toEqual([3, 6])
   );
 });
 
 describe("List.findLast", () =>
   test("should skip 4", () =>
-    expect(List.findLast(n => n mod 2 == 1, [1, 2, 3, 4])) |> toEqual(3)
+    expect(List.findLast([1, 2, 3, 4], n => n mod 2 == 1)) |> toEqual(3)
   )
 );
 
 describe("List.findLastIndex", () =>
   test("should skip 4", () =>
-    expect(List.findLastIndex(n => n mod 2 == 1, [1, 2, 3, 4]))
+    expect(List.findLastIndex([1, 2, 3, 4], n => n mod 2 == 1))
     |> toEqual(2)
   )
 );
@@ -170,10 +170,10 @@ describe("List.head", () =>
 
 describe("List.indexOfAll", () => {
   test("should get indices", () =>
-    expect(List.indexOfAll(1, [1, 2, 3, 1, 2, 3])) |> toEqual([0, 3])
+    expect(List.indexOfAll([1, 2, 3, 1, 2, 3], 1)) |> toEqual([0, 3])
   );
   test("should get empty list", () =>
-    expect(List.indexOfAll(4, [1, 2, 3, 1, 2, 3])) |> toEqual([])
+    expect(List.indexOfAll([1, 2, 3, 1, 2, 3], 4)) |> toEqual([])
   );
 });
 
