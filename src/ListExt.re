@@ -1,16 +1,15 @@
 open Belt;
 
 module List = {
-  include Belt.List;
-  let all = every;
-  let any = some;
+  let all = List.every;
+  let any = List.some;
   let bifurcate = (ary, filter: list(bool)) => {
-    let (x, y) = zip(ary, filter) |. partition(snd);
-    (map(x, fst), map(y, fst));
+    let (x, y) = List.(zip(ary, filter) |. partition(snd));
+    (List.map(x, fst), List.map(y, fst));
   };
-  let bifurcateBy = partition;
+  let bifurcateBy = List.partition;
   let takeLast = (ary, i) =>
-    reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse;
+    List.(reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse);
   let takeWhile = {
     let rec takeWhile_ = (ary, func, acc) =>
       switch (ary) {
@@ -21,10 +20,10 @@ module List = {
     (ary, func) => takeWhile_(ary, func, []);
   };
   let takeLastWhile = (ary, func) =>
-    reverse(ary) |. takeWhile(func) |. reverse;
+    List.(reverse(ary) |. takeWhile(func) |. reverse);
   let chunk = {
     let rec chunk_ = (ary, i, acc) => {
-      let len = length(ary);
+      let len = List.length(ary);
       if (i <= 0) {
         [];
       } else if (len <= i) {
@@ -33,7 +32,7 @@ module List = {
         chunk_(
           takeLast(ary, len - i),
           i,
-          acc @ [take(ary, i) |. Option.getWithDefault([])],
+          acc @ [List.take(ary, i) |. Option.getWithDefault([])],
         );
       };
     };
@@ -50,9 +49,9 @@ module List = {
       };
     (arr, value) => countOccurrences_(arr, value, 0);
   };
-  let drop = (ary, i) => takeLast(ary, length(ary) - i);
+  let drop = (ary, i) => List.drop(ary, i) |. Option.getWithDefault([]);
   let dropRight = (ary, i) =>
-    take(ary, length(ary) - i) |. Option.getWithDefault([]);
+    List.(take(ary, length(ary) - i) |. Option.getWithDefault([]));
   let dropRightWhile = takeWhile;
   let everyNth = {
     let rec everyNth_ = (ary, nth, acc, index) => {
@@ -65,36 +64,37 @@ module List = {
     };
     (ary, nth) => everyNth_(ary, nth, [], 1);
   };
-  let getExn = a =>
-    switch (a) {
-    | Some(v) => v
-    | None => raise(Not_found)
-    };
-  let findLast = (ary, fn) => reverse(ary) |. getBy(fn) |. getExn;
+  let findLast = (ary, fn) =>
+    List.(reverse(ary) |. getBy(fn) |. Option.getExn);
   let findLastIndex = (ary, fn) =>
-    mapWithIndex(ary, (i, elm) => (i, elm))
-    |. reverse
-    |. getBy(((_i, elm)) => fn(elm))
-    |. getExn
-    |. fst;
-  let head = headExn;
+    List.(
+      mapWithIndex(ary, (i, elm) => (i, elm))
+      |. reverse
+      |. getBy(((_i, elm)) => fn(elm))
+      |. Option.getExn
+      |. fst
+    );
+  let head = List.headExn;
   let indexOfAll = (ary, elm) =>
-    mapWithIndex(ary, (i, e) => (i, e))
-    |. keep(((_, e)) => e == elm)
-    |. map(fst);
-  let initial = ary => reverse(ary) |. tailExn |. reverse;
-  let range_ = (s, e, step) => Array.rangeBy(s, e - 1, ~step) |. fromArray;
+    List.(
+      mapWithIndex(ary, (i, e) => (i, e))
+      |. keep(((_, e)) => e == elm)
+      |. map(fst)
+    );
+  let initial = ary => List.(reverse(ary) |. tailExn |. reverse);
+  let range_ = (s, e, step) =>
+    Array.rangeBy(s, e - 1, ~step) |. List.fromArray;
   let initialize2DArray = (w, h, val_) =>
-    range_(0, w, 1) |. map((_) => make(h, val_));
+    range_(0, w, 1) |. List.map((_) => List.make(h, val_));
   let initializeArrayWithRange = range_;
   let initializeArrayWithRangeRight = (e, s, step) =>
-    range_(s, e, step) |. reverse;
-  let initializeArrayWithValues = make;
+    range_(s, e, step) |. List.reverse;
+  let initializeArrayWithValues = List.make;
   let join = (ary, sep) => {
     let [hd, ...tl] = ary;
     List.reduce(tl, hd, (a, b) => a ++ sep ++ b);
   };
-  let last = ary => reverse(ary) |. headExn;
-  let forEachRight = (ary, fn) => reverse(ary) |. forEach(fn);
-  let none = (ary, fn) => ! some(ary, fn);
+  let last = ary => List.(reverse(ary) |. headExn);
+  let forEachRight = (ary, fn) => List.(reverse(ary) |. forEach(fn));
+  let none = (ary, fn) => ! List.some(ary, fn);
 };

@@ -37,9 +37,8 @@ describe("List.bifurcate", () =>
 describe("List.bifurcateBy", () =>
   test("should extract \"foo\"", () =>
     expect(
-      List.bifurcateBy(
-        ["beep", "boop", "foo", "bar"],
-        str => String.contains(str, 'b'),
+      List.bifurcateBy(["beep", "boop", "foo", "bar"], str =>
+        String.contains(str, 'b')
       ),
     )
     |> toEqual((["beep", "boop", "bar"], ["foo"]))
