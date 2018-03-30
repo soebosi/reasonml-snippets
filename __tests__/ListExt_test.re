@@ -80,8 +80,8 @@ describe("List.chunk", () => {
     expect(List.chunk(["beep", "boop", "foo", "bar"], 3))
     |> toEqual([["beep", "boop", "foo"], ["bar"]])
   );
-  test("should return empty list when size <= 0", () =>
-    expect(List.chunk(["beep", "boop", "foo", "bar"], -1)) |> toEqual([])
+  test("should return full list when size <= 0", () =>
+    expect(List.chunk(["beep", "boop", "foo", "bar"], -1)) |> toEqual([["beep", "boop", "foo", "bar"]])
   );
 });
 

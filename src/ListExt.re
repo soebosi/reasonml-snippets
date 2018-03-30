@@ -23,17 +23,10 @@ module List = {
     List.(reverse(ary) |. takeWhile(func) |. reverse);
   let chunk = {
     let rec chunk_ = (ary, i, acc) => {
-      let len = List.length(ary);
-      if (i <= 0) {
-        [];
-      } else if (len <= i) {
-        acc @ [ary];
-      } else {
-        chunk_(
-          takeLast(ary, len - i),
-          i,
-          acc @ [List.take(ary, i) |. Option.getWithDefault([])],
-        );
+      switch (List.splitAt(ary, i)) {
+      | Some((group, rest)) => chunk_(rest, i, acc @ [group])
+      | None when List.length(ary) > 0 => acc @ [ary]
+      | _ => acc
       };
     };
     (ary, i) => chunk_(ary, i, []);
