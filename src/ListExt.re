@@ -8,6 +8,7 @@ module List = {
     (List.map(x, fst), List.map(y, fst));
   };
   let bifurcateBy = List.partition;
+  let compact = (ary) => List.keep(ary, (elm) => elm != None);
   let takeLast = (ary, i) =>
     List.(reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse);
   let takeWhile = {
