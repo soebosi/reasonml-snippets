@@ -8,15 +8,14 @@ module List = {
     (List.map(x, fst), List.map(y, fst));
   };
   let bifurcateBy = List.partition;
-  let compact = (ary) => List.keep(ary, (elm) => elm != None);
+  let compact = ary => List.keep(ary, elm => elm != None);
   let chunk = {
-    let rec chunk_ = (ary, i, acc) => {
+    let rec chunk_ = (ary, i, acc) =>
       switch (List.splitAt(ary, i)) {
       | Some((group, rest)) => chunk_(rest, i, acc @ [group])
       | None when List.length(ary) > 0 => acc @ [ary]
       | _ => acc
       };
-    };
     (ary, i) => chunk_(ary, i, []);
   };
   let countOccurrences = {

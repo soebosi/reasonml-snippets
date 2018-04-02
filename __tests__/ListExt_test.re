@@ -81,16 +81,17 @@ describe("List.chunk", () => {
     |> toEqual([["beep", "boop", "foo"], ["bar"]])
   );
   test("should return full list when size <= 0", () =>
-    expect(List.chunk(["beep", "boop", "foo", "bar"], -1)) |> toEqual([["beep", "boop", "foo", "bar"]])
+    expect(List.chunk(["beep", "boop", "foo", "bar"], -1))
+    |> toEqual([["beep", "boop", "foo", "bar"]])
   );
 });
 
-describe("List.compact", () => {
+describe("List.compact", () =>
   test("should remove None elements", () =>
     expect(List.compact([Some("beep"), None, Some("boop"), None]))
     |> toEqual([Some("beep"), Some("boop")])
-  );
-});
+  )
+);
 
 describe("List.countOccurrences", () => {
   test("should return 3", () =>
