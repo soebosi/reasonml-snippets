@@ -9,19 +9,6 @@ module List = {
   };
   let bifurcateBy = List.partition;
   let compact = (ary) => List.keep(ary, (elm) => elm != None);
-  let takeLast = (ary, i) =>
-    List.(reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse);
-  let takeWhile = {
-    let rec takeWhile_ = (ary, func, acc) =>
-      switch (ary) {
-      | [head, ...tail] when func(head) =>
-        takeWhile_(tail, func, acc @ [head])
-      | _ => acc
-      };
-    (ary, func) => takeWhile_(ary, func, []);
-  };
-  let takeLastWhile = (ary, func) =>
-    List.(reverse(ary) |. takeWhile(func) |. reverse);
   let chunk = {
     let rec chunk_ = (ary, i, acc) => {
       switch (List.splitAt(ary, i)) {
@@ -46,7 +33,15 @@ module List = {
   let drop = (ary, i) => List.drop(ary, i) |. Option.getWithDefault([]);
   let dropRight = (ary, i) =>
     List.(take(ary, length(ary) - i) |. Option.getWithDefault([]));
-  let dropRightWhile = takeWhile;
+  let dropRightWhile = {
+    let rec dropRightWhile_ = (ary, func, acc) =>
+      switch (ary) {
+      | [head, ...tail] when func(head) =>
+        dropRightWhile_(tail, func, acc @ [head])
+      | _ => acc
+      };
+    (ary, func) => dropRightWhile_(ary, func, []);
+  };
   let everyNth = {
     let rec everyNth_ = (ary, nth, acc, index) => {
       let skip = index mod nth != 0;
@@ -91,4 +86,9 @@ module List = {
   let last = ary => List.(reverse(ary) |. headExn);
   let forEachRight = (ary, fn) => List.(reverse(ary) |. forEach(fn));
   let none = (ary, fn) => ! List.some(ary, fn);
+  let takeLast = (ary, i) =>
+    List.(reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse);
+  let takeWhile = dropRightWhile;
+  let takeLastWhile = (ary, func) =>
+    List.(reverse(ary) |. takeWhile(func) |. reverse);
 };
