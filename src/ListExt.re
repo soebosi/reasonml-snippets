@@ -1,6 +1,5 @@
 open Belt;
 
-
 module List = {
   let all = List.every;
   let any = List.some;
@@ -21,13 +20,17 @@ module List = {
   };
   let countBy = (ary, fn, ~id) => {
     let m = Belt.Map.make(~id);
-    List.reduce(ary, m, (acc, elm) => {
-      let e = fn(elm);
-      switch (Belt.Map.get(acc, e)) {
-      | Some(count) => Belt.Map.set(acc, e, count + 1)
-      | None => Belt.Map.set(acc, e, 1)
-      };
-    });
+    List.reduce(
+      ary,
+      m,
+      (acc, elm) => {
+        let e = fn(elm);
+        switch (Belt.Map.get(acc, e)) {
+        | Some(count) => Belt.Map.set(acc, e, count + 1)
+        | None => Belt.Map.set(acc, e, 1)
+        };
+      },
+    );
   };
   type tree =
     | Leaf

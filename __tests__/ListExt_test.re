@@ -93,25 +93,29 @@ describe("List.compact", () =>
   )
 );
 
-module IntCmp = Belt.Id.MakeComparable({
-  type t = int;
-  let cmp = (a, b) => {
-    Pervasives.compare(a, b);
-  };
-});
+module IntCmp =
+  Belt.Id.MakeComparable(
+    {
+      type t = int;
+      let cmp = (a, b) => Pervasives.compare(a, b);
+    },
+  );
+
 describe("List.countBy", () => {
-  let m = List.countBy(["one", "two", "three"], String.length, ~id=(module IntCmp));
+  let m =
+    List.countBy(
+      ["one", "two", "three"],
+      String.length,
+      ~id=(module IntCmp),
+    );
   test("should have (3, 2)", () =>
-    expect(Belt.Map.get(m, 3))
-    |> toEqual(Some(2))
+    expect(Belt.Map.get(m, 3)) |> toEqual(Some(2))
   );
   test("should have (5, 1)", () =>
-    expect(Belt.Map.get(m, 5))
-    |> toEqual(Some(1))
+    expect(Belt.Map.get(m, 5)) |> toEqual(Some(1))
   );
   test("should have (0, *)", () =>
-    expect(Belt.Map.get(m, 0))
-    |> toEqual(None)
+    expect(Belt.Map.get(m, 0)) |> toEqual(None)
   );
 });
 
