@@ -127,11 +127,16 @@ describe("List.countOccurrences", () => {
   );
 });
 
-describe("List.deepFlatten", () => {
+describe("List.deepFlatten", () =>
   test("should return [1, 2, 3, 4]", () =>
-    expect(List.deepFlatten(Node(1, Node(2, Leaf, Leaf), Node(3, Leaf, Node(4, Leaf, Leaf))))) |> toEqual([1, 2, 3, 4])
-  );
-});
+    expect(
+      List.deepFlatten(
+        Node(1, Node(2, Leaf, Leaf), Node(3, Leaf, Node(4, Leaf, Leaf))),
+      ),
+    )
+    |> toEqual([1, 2, 3, 4])
+  )
+);
 
 describe("List.drop", () => {
   test("should drop 1", () =>
