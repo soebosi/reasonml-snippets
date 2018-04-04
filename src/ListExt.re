@@ -29,6 +29,16 @@ module List = {
       };
     });
   };
+  type tree = Leaf | Node(int, tree, tree);
+  let deepFlatten = (ary) => {
+    let rec _deepFlatten = (ary, acc) => {
+      switch(ary) {
+      | Leaf => acc
+      | Node(a, t1, t2) => _deepFlatten(t1, acc @ [a]) @ _deepFlatten(t2, [])
+      };
+    };
+    _deepFlatten(ary, []);
+  };
   let countOccurrences = {
     let rec countOccurrences_ = (arr, value, acc) =>
       switch (arr) {
