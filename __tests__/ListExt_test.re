@@ -142,6 +142,13 @@ describe("List.deepFlatten", () =>
   )
 );
 
+describe("List.difference", () =>
+  test("should return {3} = {1, 2, 3} \ {1, 2, 4} ", () =>
+    expect(List.difference([1, 2, 3], [1, 2, 4], ~id=(module IntCmp)))
+    |> toEqual([3])
+  )
+);
+
 describe("List.drop", () => {
   test("should drop 1", () =>
     expect(List.drop([1, 2, 3], 1)) |> toEqual([2, 3])

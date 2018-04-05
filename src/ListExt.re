@@ -46,6 +46,11 @@ module List = {
       };
     _deepFlatten(t, [], []);
   };
+  let difference = (a, b, ~id) => {
+    let s1 = List.toArray(a) |. Set.fromArray(~id);
+    let s2 = List.toArray(b) |. Set.fromArray(~id);
+    Set.(diff(s1, s2) |. toList);
+  };
   let countOccurrences = {
     let rec countOccurrences_ = (arr, value, acc) =>
       switch (arr) {
