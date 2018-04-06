@@ -111,10 +111,10 @@ module List = {
   let initializeArrayWithRangeRight = (e, s, step) =>
     range_(s, e, step) |. List.reverse;
   let initializeArrayWithValues = List.make;
-  let join = (ary, sep) => {
-    let [hd, ...tl] = ary;
-    List.reduce(tl, hd, (a, b) => a ++ sep ++ b);
-  };
+  let join = (ary, sep) =>
+    List.reduce(List.tailExn(ary), List.headExn(ary), (a, b) =>
+      a ++ sep ++ b
+    );
   let last = ary => List.(reverse(ary) |. headExn);
   let forEachRight = (ary, fn) => List.(reverse(ary) |. forEach(fn));
   let none = (ary, fn) => ! List.some(ary, fn);
