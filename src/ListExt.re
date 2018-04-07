@@ -8,7 +8,7 @@ module List = {
     (List.map(x, fst), List.map(y, fst));
   };
   let bifurcateBy = List.partition;
-  let compact = ary => List.keep(ary, elm => elm != None);
+  let compact = ary => List.keepU(ary, (. elm) => elm != None);
   let chunk = {
     let rec chunk_ = (ary, i, acc) =>
       switch (List.splitAt(ary, i)) {
@@ -20,10 +20,10 @@ module List = {
   };
   let countBy = (ary, fn, ~id) => {
     let m = Belt.Map.make(~id);
-    List.reduce(
+    List.reduceU(
       ary,
       m,
-      (acc, elm) => {
+      (. acc, elm) => {
         let e = fn(elm);
         switch (Belt.Map.get(acc, e)) {
         | Some(count) => Belt.Map.set(acc, e, count + 1)
@@ -89,7 +89,7 @@ module List = {
     List.(reverse(ary) |. getBy(fn) |. Option.getExn);
   let findLastIndex = (ary, fn) =>
     List.(
-      mapWithIndex(ary, (i, elm) => (i, elm))
+      mapWithIndexU(ary, (. i, elm) => (i, elm))
       |. reverse
       |. getBy(((_i, elm)) => fn(elm))
       |. Option.getExn
@@ -106,16 +106,16 @@ module List = {
   let range_ = (s, e, step) =>
     Array.rangeBy(s, e - 1, ~step) |. List.fromArray;
   let initialize2DArray = (w, h, val_) =>
-    range_(0, w, 1) |. List.map((_) => List.make(h, val_));
+    range_(0, w, 1) |. List.mapU((. _) => List.make(h, val_));
   let initializeArrayWithRange = range_;
   let initializeArrayWithRangeRight = (e, s, step) =>
     range_(s, e, step) |. List.reverse;
   let initializeArrayWithValues = List.make;
   let join = (ary, sep) =>
-    List.(reduce(tailExn(ary), headExn(ary), (a, b) => a ++ sep ++ b));
+    List.(reduceU(tailExn(ary), headExn(ary), (. a, b) => a ++ sep ++ b));
   let last = ary => List.(reverse(ary) |. headExn);
-  let forEachRight = (ary, fn) => List.(reverse(ary) |. forEach(fn));
-  let none = (ary, fn) => ! List.some(ary, fn);
+  let forEachRight = (ary, fn) => List.(reverse(ary) |. forEachU(fn));
+  let none = (ary, fn) => ! List.someU(ary, fn);
   let takeLast = (ary, i) =>
     List.(reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse);
   let takeWhile = dropRightWhile;
