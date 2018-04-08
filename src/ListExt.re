@@ -116,6 +116,11 @@ module List = {
   let last = ary => List.(reverse(ary) |. headExn);
   let forEachRight = (ary, fn) => List.(reverse(ary) |. forEachU(fn));
   let none = (ary, fn) => ! List.someU(ary, fn);
+  let intersection = (a, b, ~id) => {
+    let s1 = List.toArray(a) |. Set.fromArray(~id);
+    let s2 = List.toArray(b) |. Set.fromArray(~id);
+    Set.(intersect(s1, s2) |. toList);
+  };
   let takeLast = (ary, i) =>
     List.(reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse);
   let takeWhile = dropRightWhile;
