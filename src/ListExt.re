@@ -32,6 +32,17 @@ module List = {
       },
     );
   };
+  let countOccurrences = {
+    let rec countOccurrences_ = (arr, value, acc) =>
+      switch (arr) {
+      | [] => acc
+      | [a] when a == value => acc + 1
+      | [_] => acc
+      | [a, ...b] when a == value => countOccurrences_(b, value, acc + 1)
+      | [_, ...b] => countOccurrences_(b, value, acc)
+      };
+    (arr, value) => countOccurrences_(arr, value, 0);
+  };
   type tree =
     | Leaf
     | Node(int, tree, tree);
@@ -50,17 +61,6 @@ module List = {
     let s1 = List.toArray(a) |. Set.fromArray(~id);
     let s2 = List.toArray(b) |. Set.fromArray(~id);
     Set.(diff(s1, s2) |. toList);
-  };
-  let countOccurrences = {
-    let rec countOccurrences_ = (arr, value, acc) =>
-      switch (arr) {
-      | [] => acc
-      | [a] when a == value => acc + 1
-      | [_] => acc
-      | [a, ...b] when a == value => countOccurrences_(b, value, acc + 1)
-      | [_, ...b] => countOccurrences_(b, value, acc)
-      };
-    (arr, value) => countOccurrences_(arr, value, 0);
   };
   let drop = (ary, i) => List.drop(ary, i) |. Option.getWithDefault([]);
   let dropRight = (ary, i) =>
