@@ -275,6 +275,13 @@ describe("List.initializeArrayWithValues", () =>
   )
 );
 
+describe("List.intersection", () =>
+  test("should true", () =>
+    expect(List.intersection([1, 2, 3], [4, 3, 2], ~id=(module IntCmp)))
+    |> toEqual([2, 3])
+  )
+);
+
 describe("List.last", () =>
   test("should get last element", () =>
     expect(List.last([1, 2, 3])) |> toEqual(3)
@@ -295,11 +302,5 @@ describe("List.none", () => {
   );
   test("should false", () =>
     expect(List.none([0, 1, 2, 0], (. a) => a == 2)) |> toEqual(false)
-  );
-});
-
-describe("List.intersection", () => {
-  test("should true", () =>
-    expect(List.intersection([1, 2, 3], [4, 3, 2], ~id=(module IntCmp))) |> toEqual([2, 3])
   );
 });
