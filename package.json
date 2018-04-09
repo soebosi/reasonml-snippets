@@ -6,7 +6,8 @@
     "start": "bsb -make-world -w",
     "clean": "bsb -clean-world",
     "test": "npm run build && jest",
-    "fix": "npx refmt src/*.re __tests__/*.re --in-place"
+    "fix": "refmt src/*.re __tests__/*.re --in-place",
+    "doc": "docre --doctest"
   },
   "keywords": [
     "BuckleScript"
@@ -15,7 +16,8 @@
   "license": "MIT",
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
-    "bs-platform": "^2.2.3"
+    "bs-platform": "^2.2.3",
+    "docre": "git+https://github.com/jaredly/docre.git"
   },
   "dependencies": {
     "reason-cli": "^3.1.0-linux"
