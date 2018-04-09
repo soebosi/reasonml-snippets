@@ -282,6 +282,18 @@ describe("List.intersection", () =>
   )
 );
 
+describe("List.isSorted", () => {
+  test("should return 1", () =>
+    expect(List.isSorted([0, 1, 2, 2], Pervasives.compare)) |> toEqual(1)
+  );
+  test("should return -1", () =>
+    expect(List.isSorted([4, 3, 2], Pervasives.compare)) |> toEqual(-1)
+  );
+  test("should return 0", () =>
+    expect(List.isSorted([4, 3, 5], Pervasives.compare)) |> toEqual(0)
+  );
+});
+
 describe("List.last", () =>
   test("should get last element", () =>
     expect(List.last([1, 2, 3])) |> toEqual(3)

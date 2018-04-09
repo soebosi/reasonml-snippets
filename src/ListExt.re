@@ -121,6 +121,14 @@ module List = {
     let s2 = List.toArray(b) |. Set.fromArray(~id);
     Set.(intersect(s1, s2) |. toList);
   };
+  let isSorted = (ary, cmp) =>
+    if (SortArray.isSorted(List.toArray(ary), cmp)) {
+      1;
+    } else if (SortArray.isSorted(List.toArray(List.reverse(ary)), cmp)) {
+      (-1);
+    } else {
+      0;
+    };
   let takeLast = (ary, i) =>
     List.(reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse);
   let takeWhile = dropRightWhile;
