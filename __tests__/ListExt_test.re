@@ -316,3 +316,28 @@ describe("List.none", () => {
     expect(List.none([0, 1, 2, 0], (. a) => a == 2)) |> toEqual(false)
   );
 });
+
+type user = {
+  name: string,
+  age: int,
+  active: bool,
+};
+
+describe("List.partition", () =>
+  test("should true", () =>
+    expect(
+      List.partition(
+        [
+          {name: "barney", age: 36, active: false},
+          {name: "fred", age: 40, active: true},
+        ],
+        u =>
+        u.active
+      ),
+    )
+    |> toEqual((
+         [{name: "fred", age: 40, active: true}],
+         [{name: "barney", age: 36, active: false}],
+       ))
+  )
+);

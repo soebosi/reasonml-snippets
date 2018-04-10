@@ -129,6 +129,7 @@ module List = {
   let last = ary => List.(reverse(ary) |. headExn);
   let forEachRight = (ary, fn) => List.(reverse(ary) |. forEachU(fn));
   let none = (ary, fn) => ! List.someU(ary, fn);
+  let partition = List.partition;
   let takeLast = (ary, i) =>
     List.(reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse);
   let takeWhile = dropRightWhile;
