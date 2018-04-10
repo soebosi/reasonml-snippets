@@ -268,17 +268,17 @@ describe("List.initializeArrayWithValues", () =>
   )
 );
 
-describe("List.initializeArrayWithValues", () =>
-  test("should generate natural number list", () =>
-    expect(List.join(["pen", "pineapple", "apple", "pen"], ","))
-    |> toEqual("pen,pineapple,apple,pen")
-  )
-);
-
 describe("List.intersection", () =>
   test("should true", () =>
     expect(List.intersection([1, 2, 3], [4, 3, 2], ~id=(module IntCmp)))
     |> toEqual([2, 3])
+  )
+);
+
+describe("List.join", () =>
+  test("should generate natural number list", () =>
+    expect(List.join(["pen", "pineapple", "apple", "pen"], ","))
+    |> toEqual("pen,pineapple,apple,pen")
   )
 );
 
