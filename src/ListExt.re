@@ -111,11 +111,6 @@ module List = {
   let initializeArrayWithRangeRight = (e, s, step) =>
     range_(s, e, step) |. List.reverse;
   let initializeArrayWithValues = List.make;
-  let join = (ary, sep) =>
-    List.(reduceU(tailExn(ary), headExn(ary), (. a, b) => a ++ sep ++ b));
-  let last = ary => List.(reverse(ary) |. headExn);
-  let forEachRight = (ary, fn) => List.(reverse(ary) |. forEachU(fn));
-  let none = (ary, fn) => ! List.someU(ary, fn);
   let intersection = (a, b, ~id) => {
     let s1 = List.toArray(a) |. Set.fromArray(~id);
     let s2 = List.toArray(b) |. Set.fromArray(~id);
@@ -129,6 +124,11 @@ module List = {
     } else {
       0;
     };
+  let join = (ary, sep) =>
+    List.(reduceU(tailExn(ary), headExn(ary), (. a, b) => a ++ sep ++ b));
+  let last = ary => List.(reverse(ary) |. headExn);
+  let forEachRight = (ary, fn) => List.(reverse(ary) |. forEachU(fn));
+  let none = (ary, fn) => ! List.someU(ary, fn);
   let takeLast = (ary, i) =>
     List.(reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse);
   let takeWhile = dropRightWhile;
