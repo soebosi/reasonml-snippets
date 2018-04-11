@@ -341,3 +341,10 @@ describe("List.partition", () =>
        ))
   )
 );
+
+describe("List.pull", () =>
+  test("should true", () =>
+    expect(List.pull(["a", "b", "c", "a", "b", "c"], ["a", "c"]))
+    |> toEqual(["b", "b"])
+  )
+);

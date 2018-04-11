@@ -130,6 +130,8 @@ module List = {
   let forEachRight = (ary, fn) => List.(reverse(ary) |. forEachU(fn));
   let none = (ary, fn) => ! List.someU(ary, fn);
   let partition = List.partition;
+  let pull = (ary, args) =>
+    List.keepU(ary, (. e) => ! List.has(args, e, (==)));
   let takeLast = (ary, i) =>
     List.(reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse);
   let takeWhile = dropRightWhile;
