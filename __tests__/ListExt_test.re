@@ -348,3 +348,9 @@ describe("List.pull", () =>
     |> toEqual(["b", "b"])
   )
 );
+
+describe("List.remove", () =>
+  test("should true", () =>
+    expect(List.remove([1, 2, 3, 4], n => n mod 2 == 0)) |> toEqual([2, 4])
+  )
+);

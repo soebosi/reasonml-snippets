@@ -132,6 +132,7 @@ module List = {
   let partition = List.partition;
   let pull = (ary, args) =>
     List.keepU(ary, (. e) => ! List.has(args, e, (==)));
+  let remove = List.keep;
   let takeLast = (ary, i) =>
     List.(reverse(ary) |. take(i) |. Option.getWithDefault([]) |. reverse);
   let takeWhile = dropRightWhile;
