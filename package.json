@@ -20,6 +20,7 @@
     "docre": "git+https://github.com/jaredly/docre.git"
   },
   "dependencies": {
-    "reason-cli": "^3.1.0-linux"
+    "reason-cli": "^3.1.0-linux",
+    "redoc": "git+https://github.com/jaredly/docre.git"
   }
 }
